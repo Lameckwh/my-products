@@ -1,0 +1,48 @@
+services:
+  app:
+    image: localhost/my-products:latest
+    container_name: my-products-app
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      APP_NAME: "Red Hat Products"
+      APP_ENV: production
+      APP_KEY: "base64:GLSRUlyz3hICCfTZkO5YsH+SlMEGukyjBvddMg2aGrg="
+      APP_DEBUG: "false"
+      APP_URL: "http://localhost:8000"
+      LOG_CHANNEL: stderr
+      LOG_LEVEL: warning
+      DB_CONNECTION: pgsql
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: products
+      DB_USERNAME: postgres
+      DB_PASSWORD: "1598"
+      SESSION_DRIVER: database
+      CACHE_STORE: database
+      QUEUE_CONNECTION: database
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: docker.io/postgres:15
+    container_name: my-products-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: products
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "1598"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d products"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+volumes:
+  db-data:
+    driver: local

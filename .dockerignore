@@ -1,0 +1,54 @@
+# Version control
+.git
+.gitignore
+.gitattributes
+
+# Container / Docker
+Containerfile
+Dockerfile
+.dockerignore
+docker-compose*.yml
+compose.yaml
+compose.yml
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Local dev assets (rebuilt during image build)
+public/hot
+public/build/
+
+# Laravel local storage & cache (mounted at runtime or created by entrypoint)
+storage/framework/cache/
+storage/framework/sessions/
+storage/framework/views/
+storage/logs/
+bootstrap/cache/
+
+# Environment files — never bake secrets into the image
+.env
+.env.*
+!.env.example
+
+# PHP / Composer dev artefacts
+vendor/
+
+# Test suite
+tests/
+phpunit.xml
+.phpunit.result.cache
+.phpunit.cache/
+
+# IDE & editor
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# CI
+.github/
+AGENTS.md
+README.md
